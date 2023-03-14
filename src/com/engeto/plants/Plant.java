@@ -9,7 +9,9 @@ public class Plant {
     private LocalDate watering;
     private int freqOfWatering;
 
-    public Plant(String name, String notes, LocalDate planted, LocalDate watering, int freqOfWatering) {
+    public Plant(String name, String notes, LocalDate planted, LocalDate watering, int freqOfWatering) throws PlantException {
+    //    checkWatering(watering);
+    //    checkFreqOfWatering(freqOfWatering);
         this.name = name;
         this.notes = notes;
         this.planted = planted;
@@ -17,13 +19,32 @@ public class Plant {
         this.freqOfWatering = freqOfWatering;
     }
 
-    public Plant(String name, LocalDate planted, int freqOfWatering) {
+    public Plant(String name, LocalDate planted, int freqOfWatering) throws PlantException {
         this(name, "", planted, LocalDate.now(), freqOfWatering);
+     //   checkWatering(watering);
+     //   checkFreqOfWatering(freqOfWatering);
 
     }
-    public Plant(String name) {
+    public Plant(String name) throws PlantException{
         this(name, "", LocalDate.now(), LocalDate.now(), 7);
+    //    checkWatering(watering);
+    //    checkFreqOfWatering(freqOfWatering);
+    }
 
+    private void checkWatering(LocalDate water) throws PlantException {
+        if (water.isBefore(watering)) {
+            throw new PlantException("Datum nesmí být menší než den posledního zalití " +
+                    " (zadal jsi : " + water + " )");
+        }
+        watering = water;
+    }
+
+    private void checkFreqOfWatering(int frequency) throws PlantException {
+        if (frequency < 1) {
+            throw new PlantException("Počet dní nesmí být menší než 1" +
+                    " (zadal jsi : " + frequency + " )");
+        }
+        freqOfWatering = frequency;
     }
 
     public String getWateringInfo() {
@@ -61,12 +82,9 @@ public class Plant {
 
     public LocalDate getWatering() { return watering; }
 
-    public void setWatering(LocalDate water) throws PlantException{
-        if (water.isBefore(watering)) {
-           throw new PlantException("Datum nesmí být menší než den posledního zalití " +
-                   " (zadal jsi : " + water + " )");
-        }
-        watering = water;
+    public void setWatering(LocalDate watering) throws PlantException{
+        checkWatering(watering);
+        this.watering = watering;
     }
 
 
@@ -74,12 +92,9 @@ public class Plant {
         return freqOfWatering;
     }
 
-    public void setFreqOfWatering(int frequency) throws PlantException{
-        if (frequency < 1) {
-            throw new PlantException("Počet dní nesmí být menší než 1" +
-                    " (zadal jsi : " + frequency + " )");
-       }
-         freqOfWatering = frequency;
+    public void setFreqOfWatering(int freqOfWatering) throws PlantException{
+        checkFreqOfWatering(freqOfWatering);
+        this.freqOfWatering = freqOfWatering;
     }
 
 }
