@@ -10,13 +10,7 @@ import java.util.Scanner;
 
 public class PlantsList {
 
-    private static List<Plant> dataList = new ArrayList<>();
-    public void addPlant(Plant plant) { dataList.add(plant); }
-    // public void get(Plant plant) {dataList.get(0);}
-    public void getPlant(int index) { dataList.get(index); }
-    public void remove(Plant plant) { dataList.remove(plant); }
-    public void clear() { dataList.clear(); }
-    public List<Plant> getList() { return new ArrayList<>(dataList); }
+    public static List<Plant> dataList = new ArrayList<>();
 
     public void addAllFromFile(String filename) throws PlantException {
         long lineNumber = 0;
@@ -56,7 +50,30 @@ public class PlantsList {
         }
         return allPlants;
     }
-}
+
+
+    public void add(Plant plant) { dataList.add(plant); }
+    public void remove(int i) { dataList.remove(i); }
+    public void clear() { dataList.clear(); }
+    public List<Plant> getList() {
+        return new ArrayList<>(dataList); }
+
+    @Override
+    public String toString() {
+        return dataList.toString();
+    }
+
+
+
+
+     public static List<Plant> getDataList() { return dataList; }
+
+
+
+    }
+
+
+
 
 
 

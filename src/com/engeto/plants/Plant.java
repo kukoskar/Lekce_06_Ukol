@@ -10,41 +10,33 @@ public class Plant {
     private int freqOfWatering;
 
     public Plant(String name, String notes, LocalDate planted, LocalDate watering, int freqOfWatering) throws PlantException {
-    //    checkWatering(watering);
-    //    checkFreqOfWatering(freqOfWatering);
         this.name = name;
         this.notes = notes;
         this.planted = planted;
         this.watering = watering;
         this.freqOfWatering = freqOfWatering;
+        checkFreqOfWatering(freqOfWatering);
+        checkWatering(watering);
+
     }
 
     public Plant(String name, LocalDate planted, int freqOfWatering) throws PlantException {
         this(name, "", planted, LocalDate.now(), freqOfWatering);
-     //   checkWatering(watering);
-     //   checkFreqOfWatering(freqOfWatering);
-
     }
+
     public Plant(String name) throws PlantException{
         this(name, "", LocalDate.now(), LocalDate.now(), 7);
-    //    checkWatering(watering);
-    //    checkFreqOfWatering(freqOfWatering);
     }
 
-    private void checkWatering(LocalDate water) throws PlantException {
-        if (water.isBefore(watering)) {
+    private void checkWatering(LocalDate planted) throws PlantException {
+        if (watering.isBefore(planted)) {
             throw new PlantException("Datum nesmí být menší než den posledního zalití " +
-                    " (zadal jsi : " + water + " )");
+                    " (zadal jsi zasazení: " + planted + " a poslední zalití " + watering + " )");
         }
-        watering = water;
     }
 
-    private void checkFreqOfWatering(int frequency) throws PlantException {
-        if (frequency < 1) {
-            throw new PlantException("Počet dní nesmí být menší než 1" +
-                    " (zadal jsi : " + frequency + " )");
-        }
-        freqOfWatering = frequency;
+    private void checkFreqOfWatering(int freqOfWatering) throws PlantException {
+        setFreqOfWatering(freqOfWatering);
     }
 
     public String getWateringInfo() {
@@ -87,14 +79,14 @@ public class Plant {
         this.watering = watering;
     }
 
-
     public int getFreqOfWatering() {
         return freqOfWatering;
     }
 
-    public void setFreqOfWatering(int freqOfWatering) throws PlantException{
-        checkFreqOfWatering(freqOfWatering);
-        this.freqOfWatering = freqOfWatering;
+    public void setFreqOfWatering(int freqOfWatering) throws PlantException {
+        if (freqOfWatering < 1) {
+            throw new PlantException("Počet dní nesmí být menší než 1" +
+                    " (zadal jsi : " + freqOfWatering + " )");
+        }
     }
-
 }
