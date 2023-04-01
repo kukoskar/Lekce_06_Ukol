@@ -3,6 +3,7 @@ package com.engeto.plants;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class PlantsList {
 
     public static List<Plant> dataList = new ArrayList<>();
 
-    public void addAllFromFile(String filename) throws PlantException {
+    public void addAllFromFile(String filename, String tabulator) throws PlantException {
         long lineNumber = 0;
         String[] items = new String[0];
         String line = "";
@@ -30,7 +31,7 @@ public class PlantsList {
                         Integer.parseInt((items[2]))
                 );
                 dataList.add(plant);
-                // System.out.println(line);
+
               }
         } catch (FileNotFoundException e) {
             throw new PlantException("Nepodařilo se nalézt soubor " + filename
@@ -41,8 +42,15 @@ public class PlantsList {
                             + items[2] + "\nŘádek: " + line
                             + "\n\"" + e.getLocalizedMessage() + "\"");
         }
+        catch (DateTimeException e) {
+            throw new PlantException(
+                    "Špatně zadané datum na řádku " + lineNumber + ": "
+                            + items[3] + items[4] + "\nŘádek: " + line
+                            + "\n\"" + e.getLocalizedMessage() + "\"");
+        }
+
     }
-    public static String allListPlants() {
+    public static String getDescriptionOfAllPlants() {
         String allPlants = "";
         for (Plant plant : dataList) {
             allPlants += plant.getName() + " " + plant.getNotes() + " " + plant.getFreqOfWatering() +
@@ -51,26 +59,29 @@ public class PlantsList {
         return allPlants;
     }
 
+    public void add(Plant plant) {
+      dataList.add(plant);
+    }
+    public void remove(int i) {
 
-    public void add(Plant plant) { dataList.add(plant); }
-    public void remove(int i) { dataList.remove(i); }
-    public void clear() { dataList.clear(); }
+        dataList.remove(i);
+    }
+    public void clear() {
+      dataList.clear();
+    }
     public List<Plant> getList() {
-        return new ArrayList<>(dataList); }
 
-    @Override
+        return new ArrayList<>(dataList);
+    }
+
+      @Override
     public String toString() {
         return dataList.toString();
     }
-
-
-
-
-     public static List<Plant> getDataList() { return dataList; }
-
-
-
+     public static List<Plant> getDataList() {
+         return dataList;
     }
+  }
 
 
 

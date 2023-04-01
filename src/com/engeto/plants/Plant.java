@@ -36,6 +36,10 @@ public class Plant {
     }
 
     private void checkFreqOfWatering(int freqOfWatering) throws PlantException {
+        if (freqOfWatering < 1) {
+            throw new PlantException("Počet dní nesmí být menší než 1" +
+                    " (zadal jsi : " + freqOfWatering + " )");
+        }
         setFreqOfWatering(freqOfWatering);
     }
 
@@ -48,39 +52,49 @@ public class Plant {
                 + "." + " Prosím zalévat každých " + freqOfWatering + " dni. ";
     }
 
-    public String getName() {
-        return name;
+    public String getName()
+    {
+      return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name)
+    {
+      this.name = name;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getNotes()
+    {
+       return notes;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNotes(String notes)
+    {
+      this.notes = notes;
     }
 
-    public LocalDate getPlanted() {
-        return planted;
+    public LocalDate getPlanted()
+    {
+      return planted;
     }
 
-    public void setPlanted(LocalDate planted) {
-        this.planted = planted;
+    public void setPlanted(LocalDate planted)
+    {
+      this.planted = planted;
     }
 
-    public LocalDate getWatering() { return watering; }
+    public LocalDate getWatering()
+    {
+      return watering;
+    }
 
     public void setWatering(LocalDate watering) throws PlantException{
         checkWatering(watering);
         this.watering = watering;
     }
 
-    public int getFreqOfWatering() {
-        return freqOfWatering;
+    public int getFreqOfWatering()
+    {
+      return freqOfWatering;
     }
 
     public void setFreqOfWatering(int freqOfWatering) throws PlantException {
