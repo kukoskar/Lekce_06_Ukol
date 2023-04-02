@@ -1,8 +1,9 @@
 package com.engeto.plants;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
-public class Plant {
+public class Plant implements Comparable<Plant> {
     private String name;
     private String notes;
     private LocalDate planted;
@@ -103,4 +104,27 @@ public class Plant {
                     " (zadal jsi : " + freqOfWatering + " )");
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plant plant = (Plant) o;
+        return getName().equals(plant.getName());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getName());
+    }
+    @Override
+    public int compareTo(Plant o)
+    {
+        return getName().compareTo(o.getName());
+    }
+
+
+
+
 }

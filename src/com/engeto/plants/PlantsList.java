@@ -1,8 +1,6 @@
 package com.engeto.plants;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ public class PlantsList {
             while (scanner.hasNextLine()) {
                 lineNumber++;
                 line = scanner.nextLine();
-                items = line.split("\t");
+                items = line.split(tabulator);
                if (items.length != 5) throw new PlantException("Špatný počet položek na řádku číslo " + lineNumber);
                 Plant plant = new Plant(
                         items[0],
@@ -48,8 +46,24 @@ public class PlantsList {
                             + items[3] + items[4] + "\nŘádek: " + line
                             + "\n\"" + e.getLocalizedMessage() + "\"");
         }
-
     }
+
+    public void saveToFile(String filename, String tabulator) throws PlantException {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
+            for (Plant plant : dataList) {
+                String record =
+                  plant.getName()+tabulator
+                  +plant.getNotes()+tabulator
+                  +plant.getFreqOfWatering()+tabulator
+                  +plant.getWatering()+tabulator
+                  +plant.getPlanted();
+               writer.println(record);
+            }
+        } catch (IOException e) {
+            throw new PlantException("Došlo k chybě při zápisu do souboru "+filename+ ": " + e.getLocalizedMessage() );
+        }
+    }
+
     public static String getDescriptionOfAllPlants() {
         String allPlants = "";
         for (Plant plant : dataList) {
@@ -66,6 +80,10 @@ public class PlantsList {
 
         dataList.remove(i);
     }
+
+    public void size(){
+        dataList.size();
+    }
     public void clear() {
       dataList.clear();
     }
@@ -78,7 +96,7 @@ public class PlantsList {
     public String toString() {
         return dataList.toString();
     }
-     public static List<Plant> getDataList() {
+     public static List<Plant> getDataListList() {
          return dataList;
     }
   }
