@@ -1,7 +1,7 @@
 import com.engeto.plants.*;
+import com.engeto.plants.WateringComparator;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Main {
@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) throws PlantException {
         PlantsList dataList = new PlantsList();
         try {
-            dataList.addAllFromFile(Settings.getFilename(), Settings.getTabulator());
+            dataList.addAllFromFile(Settings.getFilename(), Settings.getDelimeter());
         } catch (PlantException e) {
             System.err.println(e.getLocalizedMessage());
         }
@@ -29,30 +29,30 @@ public class Main {
             list.add(plant2);
             list.add(plant3);
             list.add(plant4);
+
             listSet.add(plant);
             listSet.add(plant2);
+            listSet.add(plant2);
+            listSet.add(plant);
+            listSet.add(plant2);
+            listSet.add(plant4);
+            listSet.add(plant2);
+            listSet.add(plant3);
 
             Collections.sort(list);
              list.forEach ( n -> {
                System.out.println(n.getName()+ " " +n.getNotes()+ " zasazená: " +n.getPlanted());
                });
         System.out.println("\n");
-        Collections.sort(list, new CompareDateWatering());
+        Collections.sort(list, new WateringComparator());
          list.forEach(c -> System.out.println(c.getName()+": "+c.getWatering()));
 
-        System.out.println(listSet.size());
-        LocalDate Planted = LocalDate.now().minusDays((long) Math.floor(Math.random()*80));
-        LocalDate today = LocalDate.now();
-        String isBetween = "";
+        System.out.println("\n" + "Počet prvků v množině je: " + listSet.size() + "\n");
 
-        if (ChronoUnit.MONTHS.between(Planted, today) < 1) {
-            isBetween = "is";
-        } else {
-            isBetween = "is NOT";
-        }
-        System.out.println(
-                ""+Planted+" "+isBetween
-                        +" within last month!");
+        listSet.forEach( n -> {
+            System.out.println(n.getPlanted());
+        });
+
 
         System.out.println("\n" + plant.getWateringInfo());
         System.out.println(plant2.getWateringInfo());
@@ -71,6 +71,8 @@ public class Main {
              System.err.println("Chyba při nastavení posledního dne zalití : "
                      + e.getLocalizedMessage());
          }
+        System.out.println("\n");
+
             dataList.add(plant);
             dataList.add(plant2);
             dataList.add(plant3);
@@ -78,7 +80,7 @@ public class Main {
             dataList.add(plant4);
             System.out.println(PlantsList.getDescriptionOfAllPlants());
             System.out.println("Počet prvků v seznamu : " + dataList.getList().size() + "\n");
-      //    System.out.println("První prvek: " + list.get(0) + "\n");
+                System.out.println("První prvek: " + list.get(0).getName() + "\n");
 
             try {
                 plant.getFreqOfWatering();
@@ -93,15 +95,12 @@ public class Main {
             }
 
         try {
-            dataList.saveToFile(Settings.getFilename(), Settings.getTabulator());
+            dataList.saveToFile(Settings.getFilename(), Settings.getDelimeter());
         } catch (PlantException e) {
             System.err.println(e.getLocalizedMessage());
         }
-        System.out.println("\n");
-
-
-            }
-        }
+      }
+    }
 
 
 

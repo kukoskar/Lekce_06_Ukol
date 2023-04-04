@@ -1,7 +1,6 @@
 package com.engeto.plants;
-import java.util.Comparator;
 
-public class CompareDateWatering implements Comparator<Plant>{
+public class WateringComparator implements java.util.Comparator<Plant> {
 
     @Override
     public int compare(Plant first, Plant second) {

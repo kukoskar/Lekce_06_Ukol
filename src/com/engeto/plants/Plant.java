@@ -68,6 +68,7 @@ public class Plant implements Comparable<Plant> {
        return notes;
     }
 
+
     public void setNotes(String notes)
     {
       this.notes = notes;
@@ -89,9 +90,11 @@ public class Plant implements Comparable<Plant> {
     }
 
     public void setWatering(LocalDate watering) throws PlantException{
-        checkWatering(watering);
-        this.watering = watering;
-    }
+        if (watering.isBefore(planted)) {
+            throw new PlantException("Datum nesmí být menší než den posledního zalití " +
+                    " (zadal jsi zasazení: " + planted + " a poslední zalití " + watering + " )");
+        }
+     }
 
     public int getFreqOfWatering()
     {
@@ -123,8 +126,6 @@ public class Plant implements Comparable<Plant> {
     {
         return getName().compareTo(o.getName());
     }
-
-
 
 
 }

@@ -11,7 +11,7 @@ public class PlantsList {
 
     public static List<Plant> dataList = new ArrayList<>();
 
-    public void addAllFromFile(String filename, String tabulator) throws PlantException {
+    public void addAllFromFile(String filename, String delimeter) throws PlantException {
         long lineNumber = 0;
         String[] items = new String[0];
         String line = "";
@@ -19,7 +19,7 @@ public class PlantsList {
             while (scanner.hasNextLine()) {
                 lineNumber++;
                 line = scanner.nextLine();
-                items = line.split(tabulator);
+                items = line.split(delimeter);
                if (items.length != 5) throw new PlantException("Špatný počet položek na řádku číslo " + lineNumber);
                 Plant plant = new Plant(
                         items[0],
@@ -48,14 +48,14 @@ public class PlantsList {
         }
     }
 
-    public void saveToFile(String filename, String tabulator) throws PlantException {
+    public void saveToFile(String filename, String delimeter) throws PlantException {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
             for (Plant plant : dataList) {
                 String record =
-                  plant.getName()+tabulator
-                  +plant.getNotes()+tabulator
-                  +plant.getFreqOfWatering()+tabulator
-                  +plant.getWatering()+tabulator
+                  plant.getName()+delimeter
+                  +plant.getNotes()+delimeter
+                  +plant.getFreqOfWatering()+delimeter
+                  +plant.getWatering()+delimeter
                   +plant.getPlanted();
                writer.println(record);
             }
@@ -74,10 +74,9 @@ public class PlantsList {
     }
 
     public void add(Plant plant) {
-      dataList.add(plant);
+            dataList.add(plant);
     }
     public void remove(int i) {
-
         dataList.remove(i);
     }
 
@@ -88,18 +87,21 @@ public class PlantsList {
       dataList.clear();
     }
     public List<Plant> getList() {
-
         return new ArrayList<>(dataList);
     }
 
-      @Override
+    @Override
     public String toString() {
         return dataList.toString();
     }
-     public static List<Plant> getDataListList() {
-         return dataList;
+
+    public static List<Plant> getDataListList() {
+        return dataList;
     }
   }
+
+
+
 
 
 
