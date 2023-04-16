@@ -1,15 +1,26 @@
 package com.engeto.plants;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class PlantsList {
 
     public static List<Plant> dataList = new ArrayList<>();
+    public static Set<Plant> listSet = new HashSet<>();
+
+ /*   public Set<LocalDate> getDatesOfPlanting() {
+        LocalDate[] getAllPlanted = new LocalDate[];
+        for (Plant plant : dataList) {
+           plant.getPlanted();
+        }
+        return getAllPlanted;
+    }*/
+
+//    Zkus si do třídy PlantList přidat metodu getDatesOfPlanting(),
+//    která bude vracet množinu dat, kdy byla zasazena nějaká rostlina:
 
     public void addAllFromFile(String filename, String delimeter) throws PlantException {
         long lineNumber = 0;
@@ -98,7 +109,11 @@ public class PlantsList {
     public static List<Plant> getDataListList() {
         return dataList;
     }
-  }
+
+
+}
+
+
 
 
 

@@ -15,8 +15,9 @@ public class Main {
         }
         System.out.println(PlantsList.getDescriptionOfAllPlants());
 
-        List<Plant> list = new ArrayList<>();
-        Set<Plant> listSet = new HashSet<>();
+        List<Plant> datalist = new ArrayList<>();
+        Set<Plant> listSet = new HashSet<>(datalist);
+        List<Plant> dataList2 = new ArrayList<>(listSet);
 
             Plant plant = new Plant("Lilie", "Jsem hezká ", LocalDate.of(2023, 3, 4),
                         LocalDate.of(2023, 3, 7), 6);
@@ -25,10 +26,10 @@ public class Main {
             Plant plant4 = new Plant("Bazalka", " v kuchyni", LocalDate.of(2021,9,4),
                         LocalDate.of(2021,9,4), 3 );
 
-            list.add(plant);
-            list.add(plant2);
-            list.add(plant3);
-            list.add(plant4);
+            datalist.add(plant);
+            datalist.add(plant2);
+            datalist.add(plant3);
+            dataList.add(plant4);
 
             listSet.add(plant);
             listSet.add(plant2);
@@ -39,20 +40,22 @@ public class Main {
             listSet.add(plant2);
             listSet.add(plant3);
 
-            Collections.sort(list);
-             list.forEach ( n -> {
+            Collections.sort(datalist);
+             datalist.forEach ( n -> {
                System.out.println(n.getName()+ " " +n.getNotes()+ " zasazená: " +n.getPlanted());
                });
         System.out.println("\n");
-        Collections.sort(list, new WateringComparator());
-         list.forEach(c -> System.out.println(c.getName()+": "+c.getWatering()));
+        Collections.sort(datalist, new WateringComparator());
+          datalist.forEach(c -> System.out.println(c.getName()+": "+c.getWatering()));
 
         System.out.println("\n" + "Počet prvků v množině je: " + listSet.size() + "\n");
 
-        listSet.forEach( n -> {
-            System.out.println(n.getPlanted());
-        });
+          Collections.sort(dataList2);
+          listSet.forEach( c -> {
+              System.out.println("Datum zasazení :" + c.getPlanted());
+          });
 
+      //  System.out.println(dataList.getDatesOfPlanting());
 
         System.out.println("\n" + plant.getWateringInfo());
         System.out.println(plant2.getWateringInfo());
@@ -80,7 +83,7 @@ public class Main {
             dataList.add(plant4);
             System.out.println(PlantsList.getDescriptionOfAllPlants());
             System.out.println("Počet prvků v seznamu : " + dataList.getList().size() + "\n");
-                System.out.println("První prvek: " + list.get(0).getName() + "\n");
+                System.out.println("První prvek: " + datalist.get(0).getName() + "\n");
 
             try {
                 plant.getFreqOfWatering();

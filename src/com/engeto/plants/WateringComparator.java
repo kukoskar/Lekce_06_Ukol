@@ -6,6 +6,8 @@ public class WateringComparator implements java.util.Comparator<Plant> {
     public int compare(Plant first, Plant second) {
         return first.getWatering().compareTo(second.getWatering());
     }
+
+
 }
 
 
